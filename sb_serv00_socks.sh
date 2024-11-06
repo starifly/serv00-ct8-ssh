@@ -19,7 +19,7 @@ WORKDIR="/home/${USERNAME}/logs"
 
 # 定义变量
 export LC_ALL=C
-export UUID=${UUID:-'5195c04a-552f-4f9e-8bf9-216d257c0839'}
+export UUID=${UUID:-'09ac3a71-ea68-90cb-8bf6-020d1783df89'}
 export NEZHA_SERVER=${NEZHA_SERVER:-'nezha.yutian81.top'} 
 export NEZHA_PORT=${NEZHA_PORT:-'5555'}     
 export NEZHA_KEY=${NEZHA_KEY:-''} 
