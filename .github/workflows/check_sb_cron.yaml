@@ -3,7 +3,7 @@ name: check_sb_cron
 on:
   workflow_dispatch: # 手动触发工作流
   schedule:
-    - cron: "30 23 * * *"
+    - cron: "30 0 * * *"
 
 jobs:
   execute-commands:
