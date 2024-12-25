@@ -1,0 +1,64 @@
+name: 更新 Nezha Agent 二进制文件
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * 1"  # 每周一 UTC 0:00
+
+jobs:
+  update_release:
+    name: 更新 Nezha Agent 在 Release 中的文件
+    runs-on: ubuntu-latest
+
+    env:
+      REPO: nezhahq/agent
+      ZIP_FILE: nezha-agent_freebsd_arm64.zip
+      TARGET_FILE: nz_agent_arm64
+      RELEASE_TAG: arm64
+      RELEASE_TITLE: freebsd
+      RELEASE_NOTES: nezha_agent_arm64 for freebsd.
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v3
+
+      - name: 安装 jq
+        run: sudo apt-get install -y jq
+
+      - name: 下载 Nezha Agent 最新文件
+        run: |
+          wget -q https://github.com/$REPO/releases/latest/download/$ZIP_FILE
+          unzip -q $ZIP_FILE
+          # 提取解压后第一个二进制文件并重命名
+          BINARY_FILE=$(find . -type f -executable | head -n 1)
+          mv "$BINARY_FILE" $TARGET_FILE
+          # 使用 GitHub API 提取版本号
+          VERSION=$(curl -s https://api.github.com/repos/$REPO/releases/latest | jq -r .tag_name)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: 删除旧的发布文件
+        run: |
+          # 获取现有的资产 ID
+          asset_id=$(gh release view $RELEASE_TAG --json assets | jq -r ".assets[] | select(.name == \"$TARGET_FILE\") | .id")
+          if [ "$asset_id" ]; then
+            # 删除指定的资产
+            gh release delete-asset $RELEASE_TAG --asset-id $asset_id
+          else
+            # 如果没有找到有效的 asset_id，则使用模式匹配删除旧文件
+            gh release delete-asset $RELEASE_TAG --pattern "$TARGET_FILE" || true
+          fi
+
+      - name: 上传 Nezha Agent 文件
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 检查 Release 是否已存在
+          release_exists=$(gh release view $RELEASE_TAG --json tagName -q ".tagName" || echo "未找到")
+          if [[ "$release_exists" == "$RELEASE_TAG" ]]; then
+            echo "Release $RELEASE_TAG 已存在，正在上传文件并更新备注。"
+            gh release upload $RELEASE_TAG $TARGET_FILE --clobber
+            gh release edit $RELEASE_TAG --notes "$RELEASE_NOTES Version: ${{ env.VERSION }}"
+          else
+            echo "Release $RELEASE_TAG 不存在，正在创建新的 release 并上传文件。"
+            gh release create $RELEASE_TAG $TARGET_FILE --title "$RELEASE_TITLE" --notes "$RELEASE_NOTES Version: ${{ env.VERSION }}"
+          fi

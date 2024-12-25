@@ -23,7 +23,7 @@ REBOOT_URL="https://raw.githubusercontent.com/yutian81/serv00-ct8-ssh/main/reboo
 NEZHA_URL=""  # 哪吒面板地址，需要 http(s):// 前缀
 NEZHA_APITOKEN=""  # 哪吒面板的 API TOKEN
 NEZHA_API="$NEZHA_URL/api/v1/server/list"  # 获取哪吒探针列表的api接口，请勿修改
-NEZHA_AGENT_ID=("13" "14" "17" "23" "24" "26" "27")  # 从哪吒管理后台获取探针ID填入到此
+NEZHA_AGENT_ID=("2" "3" "4" "8" "9" "10" "11" "12")  # 从哪吒管理后台获取探针ID填入到此
 
 # 外部传入参数
 export TERM=xterm
@@ -130,8 +130,8 @@ run_remote_command() {
     SOCKS_USER=\"$SOCKS_USER\" SOCKS_PASS=\"$SOCKS_PASS\" \
     ARGO_DOMAIN=$ARGO_DOMAIN ARGO_AUTH=\"$ARGO_AUTH\" \
     NEZHA_SERVER=$NEZHA_SERVER NEZHA_PORT=$NEZHA_PORT NEZHA_KEY=$NEZHA_KEY \
-    bash <(curl -Ls ${REBOOT_URL})"
-    # bash <(curl -Ls ${SCRIPT_URL})  #使用此脚本无需重装节点，它将直接启动原本存储在服务器中进程和配置文件，实现节点重启，仅适用于yutian81修改serv00四合一有交互脚本
+    bash <(curl -Ls ${REBOOT_URL})" #使用此脚本无需重装节点，它将直接启动原本存储在服务器中进程和配置文件，实现节点重启，仅适用于yutian81修改serv00四合一有交互脚本
+    # bash <(curl -Ls ${SCRIPT_URL}) #使用此脚本即自动安装无交互节点脚本
 }
 
 # 处理服务器列表并遍历，TCP端口、Argo、哪吒探针三项检测有一项不通即连接 SSH 执行命令
