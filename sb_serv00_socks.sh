@@ -19,7 +19,7 @@ WORKDIR="/home/${USERNAME}/logs"
 
 # 定义变量
 export LC_ALL=C
-export UUID=${UUID:-'5195c04a-552f-4f9e-8bf9-216d257c0839'}
+export UUID=${UUID:-'09ac3a71-ea68-90cb-8bf6-020d1783df89'}
 export NEZHA_SERVER=${NEZHA_SERVER:-'nezha.yutian81.top'} 
 export NEZHA_PORT=${NEZHA_PORT:-'5555'}     
 export NEZHA_KEY=${NEZHA_KEY:-''} 
@@ -42,9 +42,9 @@ NZ_NPM_ARMURL="https://github.com/yutian81/serv00-ct8-ssh/releases/download/arm6
 SB_WEB_X86URL="https://00.2go.us.kg/web"
 AG_BOT_X86URL="https://00.2go.us.kg/bot"
 NZ_NPM_X86URL="https://00.2go.us.kg/npm"
-CORN_URL="https://raw.githubusercontent.com/yutian81/serv00-ct8-ssh/main/check_sb_cron.sh"
-UPDATA_URL="https://raw.githubusercontent.com/yutian81/serv00-ct8-ssh/main/sb_serv00_socks.sh"
-REBOOT_URL="https://raw.githubusercontent.com/yutian81/serv00-ct8-ssh/main/reboot.sh"
+CORN_URL="https://raw.githubusercontent.com/starifly/serv00-ct8-ssh/main/check_sb_cron.sh"
+UPDATA_URL="https://raw.githubusercontent.com/starifly/serv00-ct8-ssh/main/sb_serv00_socks.sh"
+REBOOT_URL="https://raw.githubusercontent.com/starifly/serv00-ct8-ssh/main/reboot.sh"
 
 [ -d "${WORKDIR}" ] || (mkdir -p "${WORKDIR}" && chmod -R 755 "${WORKDIR}")
 
@@ -485,18 +485,6 @@ generate_config() {
     "rules": [
       {
         "rule_set": [
-          "geosite-openai"
-        ],
-        "server": "wireguard"
-      },
-      {
-        "rule_set": [
-          "geosite-netflix"
-        ],
-        "server": "wireguard"
-      },
-      {
-        "rule_set": [
           "geosite-category-ads-all"
         ],
         "server": "block"
@@ -598,18 +586,6 @@ generate_config() {
       {
         "ip_is_private": true,
         "outbound": "direct"
-      },
-      {
-        "rule_set": [
-          "geosite-openai"
-        ],
-        "outbound": "wireguard-out"
-      },
-      {
-        "rule_set": [
-          "geosite-netflix"
-        ],
-        "outbound": "wireguard-out"
       },
       {
         "rule_set": [
