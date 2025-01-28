@@ -42,7 +42,7 @@ VMESS_PORT=tcp端口 HY2_PORT=udp端口 SOCKS_PORT=udp端口 SOCKS_USER=abc123 S
 
 ## VPS版一键无交互脚本 5in1：vless+reality|vmess+argo|hy2|tuic|socks5
 ```
-vless_port=34766 bash <(curl -Ls https://raw.githubusercontent.com/yutian81/serv00-ct8-ssh/main/vps_sb5in1.sh)
+PORT=34766 bash <(curl -Ls https://raw.githubusercontent.com/yutian81/serv00-ct8-ssh/main/vps_sb5in1.sh)
 ```
 
 ### 测试socks5是否通畅：运行以下命令，若正确返回服务器ip则节点通畅
