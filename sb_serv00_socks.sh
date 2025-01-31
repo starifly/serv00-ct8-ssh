@@ -688,4 +688,4 @@ menu() {
     *) red "无效的选项，请输入 0 到 6" && menu ;;
   esac
 }
-#menu
+menu
